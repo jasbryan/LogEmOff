@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace LogEmOff
+{
+    /// <summary>
+    /// The user class will hold computer and login data for each user
+    /// </summary>
+    class User
+    {
+        #region Properties
+        /// <summary>
+        /// The preson who owns accounts on computers first name
+        /// </summary>
+        public string FirstName { get; }
+
+        /// <summary>
+        /// The person who owns accounts on computers last name
+        /// </summary>
+        public string LastName { get; }
+
+        
+
+        #endregion
+    }
+}

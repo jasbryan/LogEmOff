@@ -4,7 +4,8 @@ using System.Text;
 
 namespace LogEmOff
 {
-    class Computers
+    class static Network
     {
+        public static void addLogin{Login userLogin)
     }
 }
