@@ -4,8 +4,14 @@ using System.Text;
 
 namespace LogEmOff
 {
-    class static Network
+    static class Network
     {
-        public static void addLogin{Login userLogin)
+
+        /// <summary>
+        /// Ideas to create a facroty class to make this work
+        /// </summary>
+        public static Login CreateLogin{String userLogin; String user; String ComputerName){
+
+        }
     }
 }
