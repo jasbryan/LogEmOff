@@ -14,17 +14,69 @@ namespace LogEmOff
         /// <summary>
         /// The user that this login is for
         /// </summary>
-        public User user { get; set; }
+        public User LoginUser { get;}
 
         /// <summary>
         /// The computer that this login is on
         /// </summary>
-        public Computer computer { get; set; }
+        public Computer LoginComputer { get;}
 
         /// <summary>
         /// The login that is used on this computer for this user
         /// </summary>
-        public String UserLogin { get; set; }
+        private String LoginID {}
+
+        #endregion
+
+        #region Constuctor
+        /// <summary>
+        /// Creates a Login objest to allow us to set or unset access
+        /// </summary>
+        /// <param name="user">User that this login is associatted with</param>
+        /// <param name="computer">Computer that this login is on</param>
+        /// <param name="loginID">The login ID that exists on the computer</param>
+        public Login(User user,Computer computer, String loginID)
+        {
+            LoginUser = user;
+            LoginComputer = computer;
+            LoginID = loginID;
+
+        }
+        #endregion
+
+
+        #region Methods
+        /// <summary>
+        /// Test connectvity and if login is active and enabled
+        /// </summary>
+        /// <returns>True if computer is reachable and we are able to valiadte if account is active</returns>
+        public bool IsLoginActive()
+        {
+            String loginState = LoginComputer.LoginState(LoginID);
+            if loginState = 'Enabled' { return true; }
+            return false;
+        }
+
+        /// <summary>
+        /// Test connectvity and if login is disabled
+        /// </summary>
+        /// <returns>True if computer is reachable and we are able to valiadte if account is disabled</returns>
+        public bool IsLoginDisabled()
+        {
+            String loginState = LoginComputer.LoginState(LoginID);
+            if loginState = 'Disabled' { return true; }
+            return false;
+        }
+
+        /// <summary>
+        /// Attempt to disable the login on the computer
+        /// </summary>
+        /// <returns>True if account is disabled</returns>
+        public bool DisableLogin()
+        {
+            if (IsLoginActive()) { LoginComputer.DisableLogin(LoginID); }
+            return IsLoginDisabled();
+        }
         
         #endregion
     }

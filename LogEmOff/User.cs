@@ -20,7 +20,20 @@ namespace LogEmOff
         /// </summary>
         public string LastName { get; }
 
-        
+        #endregion
+
+        #region Constructors
+
+        public User(String firstName, String lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
+        #endregion
+
+
+        #region Methods
+        //Not sure yet..
 
         #endregion
     }
