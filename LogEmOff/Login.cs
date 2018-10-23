@@ -24,7 +24,7 @@ namespace LogEmOff
         /// <summary>
         /// The login that is used on this computer for this user
         /// </summary>
-        private String LoginID {}
+        private string LoginID;
 
         #endregion
 
@@ -35,7 +35,7 @@ namespace LogEmOff
         /// <param name="user">User that this login is associatted with</param>
         /// <param name="computer">Computer that this login is on</param>
         /// <param name="loginID">The login ID that exists on the computer</param>
-        public Login(User user,Computer computer, String loginID)
+        public Login(User user,Computer computer, string loginID)
         {
             LoginUser = user;
             LoginComputer = computer;
@@ -52,8 +52,8 @@ namespace LogEmOff
         /// <returns>True if computer is reachable and we are able to valiadte if account is active</returns>
         public bool IsLoginActive()
         {
-            String loginState = LoginComputer.LoginState(LoginID);
-            if loginState = 'Enabled' { return true; }
+            string loginState = LoginComputer.LoginState(LoginID);
+            if (loginState == "Enabled") { return true; }
             return false;
         }
 
@@ -63,8 +63,8 @@ namespace LogEmOff
         /// <returns>True if computer is reachable and we are able to valiadte if account is disabled</returns>
         public bool IsLoginDisabled()
         {
-            String loginState = LoginComputer.LoginState(LoginID);
-            if loginState = 'Disabled' { return true; }
+            string loginState = LoginComputer.LoginState(LoginID);
+            if (loginState == "Disabled") { return true; }
             return false;
         }
 

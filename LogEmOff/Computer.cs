@@ -14,33 +14,33 @@ namespace LogEmOff
         /// <summary>
         /// Strores admin login String
         /// </summary>
-        private String AdminLogin;
+        private string AdminLogin;
 
         /// <summary>
         /// Stores admin password String
         /// </summary>
-        private String AdminPassword;
+        private string AdminPassword;
 
         /// <summary>
         /// Name for computer on the network
         /// </summary>
-        public String ComputerName { get; set; }
+        public string ComputerName { get; set; }
 
         /// <summary>
         /// IP address that the computer is assigned
         /// </summary>
-        public String ComputerIP { get; }
+        public string ComputerIP { get; }
 
         /// <summary>
         /// MAC for the computer to track
         /// </summary>
-        public String ComputerMAC { get; }
+        public string ComputerMAC { get; }
 
         #endregion
 
         #region Constructors
 
-        public Computer(String computerName, String computerIP, String adminLogin, String adminPassword, String computerMAC="")
+        public Computer(string computerName, string computerIP, string adminLogin, string adminPassword, string computerMAC ="")
         {
             ComputerName = computerName;
             ComputerIP = computerIP;
@@ -53,9 +53,10 @@ namespace LogEmOff
         
         #region Methods
         
-        private String encryptPassword(String password)
+        private string encryptPassword(string password)
         {
             //some code to encrypt password
+            return "testy";
         }
 
         
@@ -65,6 +66,7 @@ namespace LogEmOff
         /// <returns>True if computer is reachable and flase if not</returns>
         public bool pingComputer()
         {
+            return true;
 
         }
 

@@ -24,7 +24,7 @@ namespace LogEmOff
 
         #region Constructors
 
-        public User(String firstName, String lastName)
+        public User(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
