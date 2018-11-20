@@ -26,7 +26,7 @@ namespace LogEmOff
                     case "1":
                         try
                         {
-                            Console.WriteLine("Please enter the First Name:");
+                            Console.Write("Please enter the First Name:");
                             var fName = Console.ReadLine();
                             Console.Write("Please Last Name:");
                             var lName = Console.ReadLine();
@@ -113,7 +113,7 @@ namespace LogEmOff
             var daComputers = Network.GetComputers();
             foreach(var tempComp in daComputers)
             {
-                Console.WriteLine($"ComputerID: {tempComp.ComputerName}, ComputerName: {tempComp.ComputerName}");
+                Console.WriteLine($"ComputerID: {tempComp.ComputerID}, ComputerName: {tempComp.ComputerName}");
             }
         }
 

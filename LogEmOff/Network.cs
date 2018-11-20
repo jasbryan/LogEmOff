@@ -12,6 +12,8 @@ namespace LogEmOff
     {
         #region Properties
 
+
+        /*
         /// <summary>
         /// List of users
         /// </summary>
@@ -26,7 +28,10 @@ namespace LogEmOff
         /// List of computers
         /// </summary>
         private static List<Computer> networkComputers = new List<Computer>();
+        */
 
+        private static NetworkModel db = new NetworkModel();
+        
         #endregion
 
         #region Methods
@@ -40,10 +45,16 @@ namespace LogEmOff
         /// <param name="ComputerName">the computer that the login works on</param>
         public static Login AddLogin(int userID, int computerID, string userLogin)
         {
-            var user = Network.GetUserByID(userID);
-            var computer = Network.GetComputerByID(computerID);
-            var tempLogin = new Login(user, computer, userLogin); 
-            networkLogins.Add(tempLogin);
+            var tempLogin = new Login
+            {
+                UserID = userID,
+                ComputerID = computerID,
+                LoginName = userLogin
+            };
+
+            //networkLogins.Add(tempLogin);
+            db.Logins.Add(tempLogin);
+            db.SaveChanges();
             return tempLogin;
 
         }
@@ -57,7 +68,9 @@ namespace LogEmOff
         public static User AddUser(string firstName, string lastName)
         {
             var newUser = new User(firstName, lastName);
-            networkUsers.Add(newUser);
+            //networkUsers.Add(newUser);
+            db.Users.Add(newUser);
+            db.SaveChanges();
             return newUser;
 
         }
@@ -73,7 +86,9 @@ namespace LogEmOff
         public static Computer AddComputer(string name, string ip , string adminLogin, string adminPassword)
         {
             var tempComputer = new Computer(name, ip, adminLogin, adminPassword);
-            networkComputers.Add(tempComputer);
+            //networkComputers.Add(tempComputer);
+            db.Computers.Add(tempComputer);
+            db.SaveChanges();
             return tempComputer;
 
         }
@@ -90,7 +105,8 @@ namespace LogEmOff
         /// <returns>List of Computer objects</returns>
         public static IEnumerable<Computer> GetComputers()
         {
-            return networkComputers;
+            //return networkComputers;
+            return db.Computers;
         }
 
         /// <summary>
@@ -99,7 +115,8 @@ namespace LogEmOff
         /// <returns>List of User objects</returns>
         public static IEnumerable<User> GetUsers()
         {
-            return networkUsers;
+            //return networkUsers;
+            return db.Users;
         }
 
         /// <summary>
@@ -108,18 +125,21 @@ namespace LogEmOff
         /// <returns>List of Login objects</returns>
         public static IEnumerable<Login> GetLogins()
         {
-            return networkLogins;
+            //return networkLogins;
+            return db.Logins;
         }
 
         public static Computer GetComputerByID(int computerID)
         {
-            return networkComputers.SingleOrDefault(a => a.ComputerID == computerID);
+            //return networkComputers.SingleOrDefault(a => a.ComputerID == computerID);
+            return db.Computers.SingleOrDefault(a => a.ComputerID == computerID);
 
         }
 
         public static User GetUserByID(int userID)
         {
-            return networkUsers.SingleOrDefault(a => a.UserID == userID);
+            //return networkUsers.SingleOrDefault(a => a.UserID == userID);
+            return db.Users.SingleOrDefault(a => a.UserID == userID);
         }
 
         public static string EncryptPassword(string password)

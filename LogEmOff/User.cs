@@ -9,7 +9,7 @@ namespace LogEmOff
     /// </summary>
     class User
     {
-        private static int lastUserID = 0;
+        //private static int lastUserID = 0;
 
         #region Properties
         /// <summary>
@@ -27,6 +27,8 @@ namespace LogEmOff
         /// </summary>
         public int UserID { get; set; }
 
+        public virtual ICollection<Login> Logins { get; set; }
+
         #endregion
 
         #region Constructors
@@ -35,7 +37,7 @@ namespace LogEmOff
         {
             FirstName = firstName;
             LastName = lastName;
-            UserID = ++lastUserID;
+            //UserID = ++lastUserID;
         }
         #endregion
 

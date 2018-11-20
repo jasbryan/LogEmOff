@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace LogEmOff
@@ -14,19 +15,27 @@ namespace LogEmOff
         /// <summary>
         /// The user that this login is for
         /// </summary>
-        public User LoginUser { get; set; }
+        [ForeignKey("Users")]
+        public int UserID { get; set; }
+
+        public virtual User User { get; set; }
 
         /// <summary>
         /// The computer that this login is on
         /// </summary>
-        public Computer LoginComputer { get; set; }
+        [ForeignKey("Computers")]
+        public int ComputerID { get; set; }
+
+        public virtual Computer Computer { get; set; }
 
         /// <summary>
         /// The login that is used on this computer for this user
         /// </summary>
-        public string LoginID { get; set; }
+        public string LoginName { get; set; }
 
         public Boolean Enabled { get; set; }
+
+        public int LoginID { get; set; }
 
         #endregion
 
@@ -36,12 +45,13 @@ namespace LogEmOff
         /// </summary>
         /// <param name="user">User that this login is associatted with</param>
         /// <param name="computer">Computer that this login is on</param>
-        /// <param name="loginID">The login ID that exists on the computer</param>
-        public Login(User user,Computer computer, string loginID)
+        /// <param name="loginName">The login ID that exists on the computer</param>
+        public Login()
         {
-            LoginUser = user;
-            LoginComputer = computer;
-            LoginID = loginID;
+            //User = user;
+            //Computer = computer;
+            //LoginName = loginName;
+            //LoginID = loginID;
             //get state of login later
             Enabled = false;
 
@@ -56,7 +66,7 @@ namespace LogEmOff
         /// <returns>True if computer is reachable and we are able to valiadte if account is active</returns>
         public bool IsLoginActive()
         {
-            string loginState = LoginComputer.LoginState(LoginID);
+            string loginState = Computer.LoginState(LoginName);
             if (loginState == "Enabled") { return true; }
             return false;
         }
@@ -67,7 +77,7 @@ namespace LogEmOff
         /// <returns>True if computer is reachable and we are able to valiadte if account is disabled</returns>
         public bool IsLoginDisabled()
         {
-            string loginState = LoginComputer.LoginState(LoginID);
+            string loginState = Computer.LoginState(LoginName);
             if (loginState == "Disabled") { return true; }
             return false;
         }
@@ -78,7 +88,7 @@ namespace LogEmOff
         /// <returns>True if account is disabled</returns>
         public bool DisableLogin()
         {
-            if (IsLoginActive()) { LoginComputer.DisableLogin(LoginID); }
+            if (IsLoginActive()) { Computer.DisableLogin(LoginName); }
             return IsLoginDisabled();
         }
         
