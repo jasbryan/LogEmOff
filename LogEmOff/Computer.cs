@@ -9,17 +9,19 @@ namespace LogEmOff
     /// </summary>
     class Computer
     {
+        private static int lastComputerID = 0;
+
         #region Properties
         
         /// <summary>
         /// Strores admin login String
         /// </summary>
-        private string AdminLogin;
+        private string AdminLogin { get; set; }
 
         /// <summary>
         /// Stores admin password String
         /// </summary>
-        private string AdminPassword;
+        private string AdminPassword { get; set; }
 
         /// <summary>
         /// Name for computer on the network
@@ -29,36 +31,34 @@ namespace LogEmOff
         /// <summary>
         /// IP address that the computer is assigned
         /// </summary>
-        public string ComputerIP { get; }
+        public string ComputerIP { get; set; }
 
         /// <summary>
         /// MAC for the computer to track
         /// </summary>
-        public string ComputerMAC { get; }
+        public string ComputerMAC { get; set; }
+
+        public int ComputerID { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public Computer(string computerName, string computerIP, string adminLogin, string adminPassword, string computerMAC ="")
+        public Computer(string computerName, string computerIP, string adminLogin, string adminPassword)
         {
             ComputerName = computerName;
             ComputerIP = computerIP;
             AdminLogin = adminLogin;
-            AdminPassword = encryptPassword(adminPassword);
-            ComputerMAC = computerMAC;
+            AdminPassword = adminPassword;
+            //code to fetch MAC
+            ComputerMAC = "";
+            ComputerID = ++lastComputerID;
         }
 
         #endregion
         
         #region Methods
         
-        private string encryptPassword(string password)
-        {
-            //some code to encrypt password
-            return "testy";
-        }
-
         
         /// <summary>
         /// Tests connectivity to Computer object

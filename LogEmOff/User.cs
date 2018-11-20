@@ -9,6 +9,8 @@ namespace LogEmOff
     /// </summary>
     class User
     {
+        private static int lastUserID = 0;
+
         #region Properties
         /// <summary>
         /// The preson who owns accounts on computers first name
@@ -20,6 +22,11 @@ namespace LogEmOff
         /// </summary>
         public string LastName { get; }
 
+        /// <summary>
+        /// ID to track the user with
+        /// </summary>
+        public int UserID { get; set; }
+
         #endregion
 
         #region Constructors
@@ -28,6 +35,7 @@ namespace LogEmOff
         {
             FirstName = firstName;
             LastName = lastName;
+            UserID = ++lastUserID;
         }
         #endregion
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace LogEmOff
@@ -19,7 +20,7 @@ namespace LogEmOff
         /// <summary>
         /// List of logins
         /// </summary>
-        private static List<Login> netowrkLogins = new List<Login>();
+        private static List<Login> networkLogins = new List<Login>();
 
         /// <summary>
         /// List of computers
@@ -37,9 +38,13 @@ namespace LogEmOff
         /// <param name="userLogin">Login to be configured</param>
         /// <param name="user">The user that uses this login</param>
         /// <param name="ComputerName">the computer that the login works on</param>
-        public static void AddLogin(string userLogin, string user, string ComputerName)
+        public static Login AddLogin(int userID, int computerID, string userLogin)
         {
-
+            var user = Network.GetUserByID(userID);
+            var computer = Network.GetComputerByID(computerID);
+            var tempLogin = new Login(user, computer, userLogin); 
+            networkLogins.Add(tempLogin);
+            return tempLogin;
 
         }
 
@@ -49,8 +54,11 @@ namespace LogEmOff
         /// </summary>
         /// <param name="firstName">First Name of user</param>
         /// <param name="lastName">Last Name of user</param>
-        public static void AddUser(string firstName, string lastName)
+        public static User AddUser(string firstName, string lastName)
         {
+            var newUser = new User(firstName, lastName);
+            networkUsers.Add(newUser);
+            return newUser;
 
         }
 
@@ -62,9 +70,18 @@ namespace LogEmOff
         /// <param name="name">Computer Name</param>
         /// <param name="ip">Internet Protocol Address</param>
         /// <param name="mac">Machine Address</param>
-        public static void AddComputer(string adminLogin, string adminPassword, string name, string ip="",string mac="")
+        public static Computer AddComputer(string name, string ip , string adminLogin, string adminPassword)
         {
+            var tempComputer = new Computer(name, ip, adminLogin, adminPassword);
+            networkComputers.Add(tempComputer);
+            return tempComputer;
 
+        }
+
+        public static string GetComputerIP(string computerName)
+        {
+            //code to fetch computer IP address
+            return "192.168.0.1";
         }
 
         /// <summary>
@@ -91,7 +108,24 @@ namespace LogEmOff
         /// <returns>List of Login objects</returns>
         public static IEnumerable<Login> GetLogins()
         {
-            return netowrkLogins;
+            return networkLogins;
+        }
+
+        public static Computer GetComputerByID(int computerID)
+        {
+            return networkComputers.SingleOrDefault(a => a.ComputerID == computerID);
+
+        }
+
+        public static User GetUserByID(int userID)
+        {
+            return networkUsers.SingleOrDefault(a => a.UserID == userID);
+        }
+
+        public static string EncryptPassword(string password)
+        {
+            //run code to encrypt password
+            return $"ENCRYPTED__{password}";
         }
 
 

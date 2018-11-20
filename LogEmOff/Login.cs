@@ -14,17 +14,19 @@ namespace LogEmOff
         /// <summary>
         /// The user that this login is for
         /// </summary>
-        public User LoginUser { get;}
+        public User LoginUser { get; set; }
 
         /// <summary>
         /// The computer that this login is on
         /// </summary>
-        public Computer LoginComputer { get;}
+        public Computer LoginComputer { get; set; }
 
         /// <summary>
         /// The login that is used on this computer for this user
         /// </summary>
-        private string LoginID;
+        public string LoginID { get; set; }
+
+        public Boolean Enabled { get; set; }
 
         #endregion
 
@@ -40,6 +42,8 @@ namespace LogEmOff
             LoginUser = user;
             LoginComputer = computer;
             LoginID = loginID;
+            //get state of login later
+            Enabled = false;
 
         }
         #endregion
