@@ -7,7 +7,7 @@ namespace LogEmOff
     /// <summary>
     /// The user class will hold computer and login data for each user
     /// </summary>
-    class User
+    public class User
     {
         //private static int lastUserID = 0;
 

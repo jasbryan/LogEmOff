@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LogEmOff
 {
-    class NetworkModel : DbContext
+    public class NetworkModel : DbContext
     {
         public virtual DbSet<User> Users { get; set; }
 
@@ -59,6 +59,9 @@ namespace LogEmOff
 
                 entity.Property(e => e.ComputerIP)
                 .IsRequired();
+
+                entity.Property(e => e.ComputerMAC)
+                .HasMaxLength(16);
 
                 entity.HasMany(e => e.Logins);
 

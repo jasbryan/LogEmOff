@@ -8,7 +8,7 @@ namespace LogEmOff
     /// <summary>
     /// This class will represent login data
     /// </summary>
-    class Login
+    public class Login
     {
         #region Properties
 

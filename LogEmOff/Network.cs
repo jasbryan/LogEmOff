@@ -8,7 +8,7 @@ namespace LogEmOff
     /// <summary>
     /// Factory class that will hold all of the Login and User information
     /// </summary>
-    static class Network
+    public static class Network
     {
         #region Properties
 
@@ -31,12 +31,12 @@ namespace LogEmOff
         */
 
         private static NetworkModel db = new NetworkModel();
-        
+               
         #endregion
 
         #region Methods
 
-        
+
         /// <summary>
         /// Add a new Login to the network
         /// </summary>
@@ -93,6 +93,14 @@ namespace LogEmOff
 
         }
 
+        //public static Computer AddComputer(Computer newComputer)
+        //{
+        //    db.Computers.Add(newComputer);
+        //    db.SaveChanges();
+        //    return newComputer;
+
+        //}
+
         public static string GetComputerIP(string computerName)
         {
             //code to fetch computer IP address
@@ -127,6 +135,14 @@ namespace LogEmOff
         {
             //return networkLogins;
             return db.Logins;
+        }
+
+        public static object GetLoginById(int? id)
+        {
+            var tempLogin = db.Logins.SingleOrDefault(a => a.LoginID == id);
+            return tempLogin;
+            //throw new NotImplementedException();
+
         }
 
         public static Computer GetComputerByID(int computerID)

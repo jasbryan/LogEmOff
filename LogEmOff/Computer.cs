@@ -7,7 +7,7 @@ namespace LogEmOff
     /// <summary>
     /// The Computer class will represent the unique device information
     /// </summary>
-    class Computer
+    public class Computer
     {
         //private static int lastComputerID = 0;
 
@@ -34,7 +34,7 @@ namespace LogEmOff
         public string ComputerIP { get; set; }
 
         /// <summary>
-        /// MAC for the computer to track
+        /// MAC for the computer to track ( possible for WakeOnLAN )
         /// </summary>
         public string ComputerMAC { get; set; }
 
@@ -53,15 +53,27 @@ namespace LogEmOff
             AdminLogin = adminLogin;
             AdminPassword = adminPassword;
             //code to fetch MAC
-            ComputerMAC = "";
-            //ComputerID = ++lastComputerID;
+            /*
+            if (String.IsNullOrEmpty(mac) ) { getMAC(); }
+            testMAC();
+            */
+        }
+        
+        #endregion
+
+        #region Methods
+
+        private void testMAC()
+        {
+            throw new NotImplementedException();
+
         }
 
-        #endregion
-        
-        #region Methods
-        
-        
+        private void getMAC()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Tests connectivity to Computer object
         /// </summary>

@@ -1,0 +1,48 @@
+﻿@model LogEmOff.Computer
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Computer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminLogin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AdminLogin)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminPassword)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AdminPassword)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ComputerName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ComputerName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ComputerIP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ComputerIP)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ComputerMAC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ComputerMAC)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ComputerID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
