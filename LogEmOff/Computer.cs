@@ -46,6 +46,12 @@ namespace LogEmOff
 
         #region Constructors
 
+        public Computer()
+        {
+            //nothing here
+        }
+
+
         public Computer(string computerName, string computerIP, string adminLogin, string adminPassword)
         {
             ComputerName = computerName;

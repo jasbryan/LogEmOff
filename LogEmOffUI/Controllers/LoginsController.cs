@@ -14,11 +14,11 @@ namespace LogEmOffUI.Controllers
     [Authorize]
     public class LoginsController : Controller
     {
-        private readonly NetworkModel _context;
+        //private readonly NetworkModel _context;
 
         public LoginsController(NetworkModel context)
         {
-            _context = context;
+            //_context = context;
         }
 
         // GET: Logins
@@ -52,7 +52,7 @@ namespace LogEmOffUI.Controllers
                 return NotFound();
             }
 
-            var login = Network.GetLoginById(id);
+            var login = Network.GetLoginById(id.Value);
 
             if (login == null)
             {
@@ -65,8 +65,8 @@ namespace LogEmOffUI.Controllers
         // GET: Logins/Create
         public IActionResult Create()
         {
-            ViewData["ComputerID"] = new SelectList(_context.Computers, "ComputerID", "ComputerIP");
-            ViewData["UserID"] = new SelectList(_context.Users, "UserID", "FirstName");
+            ViewData["ComputerID"] = new SelectList(Network.GetComputers(), "ComputerID", "ComputerName");
+            ViewData["UserID"] = new SelectList(Network.GetUsers(), "UserID", "FirstName");
             return View();
         }
 
@@ -75,34 +75,37 @@ namespace LogEmOffUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,ComputerID,LoginName,Enabled,LoginID")] Login login)
+        public IActionResult Create([Bind("UserID,ComputerID,LoginName")] Login login)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(login);
-                await _context.SaveChangesAsync();
+                Network.AddLogin(login.UserID, login.ComputerID, login.LoginName);
+                //_context.Add(login);
+                //await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ComputerID"] = new SelectList(_context.Computers, "ComputerID", "ComputerIP", login.ComputerID);
-            ViewData["UserID"] = new SelectList(_context.Users, "UserID", "FirstName", login.UserID);
+            ViewData["ComputerID"] = new SelectList(Network.GetComputers() , "ComputerID", "ComputerIP", login.ComputerID);
+            ViewData["UserID"] = new SelectList(Network.GetUsers() , "UserID", "FirstName", login.UserID);
             return View(login);
         }
 
         // GET: Logins/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var login = await _context.Logins.FindAsync(id);
+            //var login = await _context.Logins.FindAsync(id);
+            var login = Network.GetLoginById(id.Value);
+
             if (login == null)
             {
                 return NotFound();
             }
-            ViewData["ComputerID"] = new SelectList(_context.Computers, "ComputerID", "ComputerIP", login.ComputerID);
-            ViewData["UserID"] = new SelectList(_context.Users, "UserID", "FirstName", login.UserID);
+            ViewData["ComputerID"] = new SelectList(Network.GetComputers(), "ComputerID", "ComputerName", login.ComputerID);
+            ViewData["UserID"] = new SelectList(Network.GetUsers(), "UserID", "FirstName", login.UserID);
             return View(login);
         }
 
@@ -111,7 +114,7 @@ namespace LogEmOffUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserID,ComputerID,LoginName,Enabled,LoginID")] Login login)
+        public IActionResult Edit(int id, [Bind("UserID,ComputerID,LoginName,Enabled,LoginID")] Login login)
         {
             if (id != login.LoginID)
             {
@@ -122,8 +125,9 @@ namespace LogEmOffUI.Controllers
             {
                 try
                 {
-                    _context.Update(login);
-                    await _context.SaveChangesAsync();
+                    Network.EditLogin(login);
+                    //_context.Update(login);
+                    //await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -138,24 +142,22 @@ namespace LogEmOffUI.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ComputerID"] = new SelectList(_context.Computers, "ComputerID", "ComputerIP", login.ComputerID);
-            ViewData["UserID"] = new SelectList(_context.Users, "UserID", "FirstName", login.UserID);
+            ViewData["ComputerID"] = new SelectList(Network.GetComputers(), "ComputerID", "ComputerIP", login.ComputerID);
+            ViewData["UserID"] = new SelectList(Network.GetUsers(), "UserID", "FirstName", login.UserID);
             return View(login);
         }
 
         // GET: Logins/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var login = await _context.Logins
-                .Include(l => l.Computer)
-                .Include(l => l.User)
-                .FirstOrDefaultAsync(m => m.LoginID == id);
-            if (login == null)
+            var login = Network.GetLoginById(id.Value);
+
+           if (login == null)
             {
                 return NotFound();
             }
@@ -166,17 +168,20 @@ namespace LogEmOffUI.Controllers
         // POST: Logins/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
+            var login = Network.GetLoginById(id);
+            /*
             var login = await _context.Logins.FindAsync(id);
             _context.Logins.Remove(login);
             await _context.SaveChangesAsync();
+            */
             return RedirectToAction(nameof(Index));
         }
 
         private bool LoginExists(int id)
         {
-            return _context.Logins.Any(e => e.LoginID == id);
+            return Network.GetLogins().Any(e => e.LoginID == id);
         }
     }
 }

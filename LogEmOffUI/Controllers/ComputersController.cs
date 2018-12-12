@@ -11,11 +11,11 @@ namespace LogEmOffUI.Controllers
 {
     public class ComputersController : Controller
     {
-        private readonly NetworkModel _context;
+        //private readonly NetworkModel _context;
 
         public ComputersController(NetworkModel context)
         {
-            _context = context;
+            //_context = context;
         }
 
         // GET: Computers
@@ -26,15 +26,15 @@ namespace LogEmOffUI.Controllers
         }
 
         // GET: Computers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var computer = await _context.Computers
-                .FirstOrDefaultAsync(m => m.ComputerID == id);
+            //var computer = await _context.Computers.FirstOrDefaultAsync(m => m.ComputerID == id);
+            var computer = Network.GetComputerByID(id.Value);
             if (computer == null)
             {
                 return NotFound();
@@ -58,7 +58,7 @@ namespace LogEmOffUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Network.AddComputer(computer.ComputerName, computer.ComputerIP, computer.AdminLogin, computer.AdminPassword);
+                var tempComp = Network.AddComputer(computer.ComputerName, computer.ComputerIP, computer.AdminLogin, computer.AdminPassword);
                 //_context.Add(computer);
                 //await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -67,18 +67,21 @@ namespace LogEmOffUI.Controllers
         }
 
         // GET: Computers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var computer = await _context.Computers.FindAsync(id);
+            //var computer = await _context.Computers.FindAsync(id);
+            var computer = Network.GetComputerByID(id.Value);
+
             if (computer == null)
             {
                 return NotFound();
             }
+
             return View(computer);
         }
 
@@ -87,7 +90,7 @@ namespace LogEmOffUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AdminLogin,AdminPassword,ComputerName,ComputerIP,ComputerMAC,ComputerID")] Computer computer)
+        public IActionResult Edit(int id, [Bind("AdminLogin,AdminPassword,ComputerName,ComputerIP,ComputerMAC,ComputerID")] Computer computer)
         {
             if (id != computer.ComputerID)
             {
@@ -98,8 +101,9 @@ namespace LogEmOffUI.Controllers
             {
                 try
                 {
-                    _context.Update(computer);
-                    await _context.SaveChangesAsync();
+                    //_context.Update(computer);
+                    //await _context.SaveChangesAsync();
+                    Network.EditComputer(computer);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,18 +122,26 @@ namespace LogEmOffUI.Controllers
         }
 
         // GET: Computers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var computer = await _context.Computers
-                .FirstOrDefaultAsync(m => m.ComputerID == id);
+            var computer = Network.GetComputerByID(id.Value);
+                       
+            //var computer = await _context.Computers.FirstOrDefaultAsync(m => m.ComputerID == id);
+
             if (computer == null)
             {
                 return NotFound();
+            }
+
+            
+            if (Network.GetLogins().Any(c => c.ComputerID == id))
+            {
+                ViewData["ErrorMessage"] = "This Computer is still associatted with logins, you must delete those or associate them with another computer first.";
             }
 
             return View(computer);
@@ -138,17 +150,20 @@ namespace LogEmOffUI.Controllers
         // POST: Computers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int? id)
         {
-            var computer = await _context.Computers.FindAsync(id);
-            _context.Computers.Remove(computer);
-            await _context.SaveChangesAsync();
+            Network.DeleteComputer(id.Value);
+
+            //var computer = await _context.Computers.FindAsync(id);
+            //_context.Computers.Remove(computer);
+            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ComputerExists(int id)
         {
-            return _context.Computers.Any(e => e.ComputerID == id);
+            //return _context.Computers.Any(e => e.ComputerID == id);
+            return Network.GetComputers().Any(a => a.ComputerID == id);
         }
     }
 }

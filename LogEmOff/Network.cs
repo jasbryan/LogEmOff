@@ -93,13 +93,6 @@ namespace LogEmOff
 
         }
 
-        //public static Computer AddComputer(Computer newComputer)
-        //{
-        //    db.Computers.Add(newComputer);
-        //    db.SaveChanges();
-        //    return newComputer;
-
-        //}
 
         public static string GetComputerIP(string computerName)
         {
@@ -137,10 +130,26 @@ namespace LogEmOff
             return db.Logins;
         }
 
-        public static object GetLoginById(int? id)
+        public static Login GetLoginById(int id)
         {
             var tempLogin = db.Logins.SingleOrDefault(a => a.LoginID == id);
             return tempLogin;
+            //throw new NotImplementedException();
+
+        }
+
+        public static IEnumerable<Login> GetLoginsByUserId(int id)
+        {
+            var tempLogins = db.Logins.Where(a => a.UserID == id);
+            return tempLogins;
+            //throw new NotImplementedException();
+
+        }
+
+        public static IEnumerable<Login> GetLoginsByComputerId(int id)
+        {
+            var tempLogins = db.Logins.Where(a => a.ComputerID == id);
+            return tempLogins;
             //throw new NotImplementedException();
 
         }
@@ -158,11 +167,84 @@ namespace LogEmOff
             return db.Users.SingleOrDefault(a => a.UserID == userID);
         }
 
+        public static void EditUser(User user)
+        {
+            var oldUser = Network.GetUserByID(user.UserID);
+            oldUser.FirstName = user.FirstName;
+            oldUser.LastName = user.LastName;
+            db.Update(oldUser);
+            db.SaveChanges();
+
+        }
+
+        public static void EditComputer(Computer computer)
+        {
+            var oldComp = Network.GetComputerByID(computer.ComputerID);
+            oldComp.AdminLogin = computer.AdminLogin;
+            oldComp.AdminPassword = computer.AdminPassword;
+            oldComp.ComputerIP = computer.ComputerIP;
+            oldComp.ComputerMAC = computer.ComputerMAC;
+            oldComp.ComputerName = computer.ComputerName;
+
+            db.Update(oldComp);
+            db.SaveChanges();
+
+        }
+
+        public static void EditLogin(Login login)
+        {
+            var oldLogin = Network.GetLoginById(login.LoginID);
+            oldLogin.UserID = login.UserID;
+            oldLogin.ComputerID = login.ComputerID;
+            oldLogin.LoginName = login.LoginName;
+            oldLogin.Enabled = login.Enabled;
+
+            db.Update(oldLogin);
+            db.SaveChanges();
+
+        }
+
+        public static bool DeleteUser(int id)
+        {
+            
+            if( db.Logins.Any(a => a.UserID == id ) )
+            {
+                return false;
+            }
+            var usrToDelete = Network.GetUserByID(id);
+            db.Users.Remove(usrToDelete);
+            db.SaveChanges();
+            return true;
+
+        }
+
+        public static bool DeleteComputer(int id)
+        {
+
+            if (db.Logins.Any(a => a.ComputerID == id))
+            {
+                return false;
+            }
+            var compsToDelete = Network.GetUserByID(id);
+            db.Users.Remove(compsToDelete);
+            db.SaveChanges();
+            return true;
+        }
+
+        public static bool UserExists(int id)
+        {
+            return db.Users.Any(e => e.UserID == id);
+        }
+
+
+
         public static string EncryptPassword(string password)
         {
             //run code to encrypt password
             return $"ENCRYPTED__{password}";
         }
+
+
 
 
         #endregion

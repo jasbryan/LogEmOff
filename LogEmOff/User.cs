@@ -15,12 +15,12 @@ namespace LogEmOff
         /// <summary>
         /// The preson who owns accounts on computers first name
         /// </summary>
-        public string FirstName { get; }
+        public string FirstName { get; set; }
 
         /// <summary>
         /// The person who owns accounts on computers last name
         /// </summary>
-        public string LastName { get; }
+        public string LastName { get; set; }
 
         /// <summary>
         /// ID to track the user with
@@ -32,6 +32,11 @@ namespace LogEmOff
         #endregion
 
         #region Constructors
+
+        public User()
+        {
+            //nothing needed
+        }
 
         public User(string firstName, string lastName)
         {
