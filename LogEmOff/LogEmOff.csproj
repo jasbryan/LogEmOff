@@ -15,4 +15,13 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Migrations\20181221184029_images2.Designer.cs">
+      <DependentUpon>20181221184029_images2.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Migrations\20181221185935_ComputerOnline.Designer.cs">
+      <DependentUpon>20181221185935_ComputerOnline.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

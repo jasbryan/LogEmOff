@@ -25,6 +25,8 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @if(item.Enabled) { <img src="~/images/GreenComputerIcon.png" alt="Enabled" width="32" height="32"> }
+                else { <img src="~/images/RedComputerIcon.png" alt="Disabled" width="32" height="32"> }
                 @Html.DisplayFor(modelItem => item.LoginName)
             </td>
             <td>

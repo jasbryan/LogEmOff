@@ -4,14 +4,16 @@ using LogEmOff;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LogEmOff.Migrations
 {
     [DbContext(typeof(NetworkModel))]
-    partial class NetworkModelModelSnapshot : ModelSnapshot
+    [Migration("20181221184029_images2")]
+    partial class images2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,8 +42,6 @@ namespace LogEmOff.Migrations
                         .HasMaxLength(50);
 
                     b.Property<byte[]>("GreenImage");
-
-                    b.Property<bool>("Online");
 
                     b.Property<byte[]>("RedImage");
 

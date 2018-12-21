@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using LogEmOff;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,5 +21,14 @@ namespace LogEmOffUI
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+
+
+        private static void TestComputers()
+        {
+            foreach(var comp in Network.GetComputers())
+            {
+                comp.TestConnection();
+            }
+        }
     }
 }

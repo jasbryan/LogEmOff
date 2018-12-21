@@ -38,7 +38,22 @@ namespace LogEmOff
         /// </summary>
         public string ComputerMAC { get; set; }
 
+        /// <summary>
+        /// ID used to track Computer in DB
+        /// </summary>
         public int ComputerID { get; set; }
+
+        /// <summary>
+        /// Image to represent an online computer
+        /// </summary>
+        public byte[] GreenImage { get; set; }
+
+        /// <summary>
+        /// Image to represent an offline computer
+        /// </summary>
+        public byte[] RedImage { get; set; }
+
+        public bool Online { get; set; }
 
         public virtual ICollection<Login> Logins { get; set; }
 
@@ -49,6 +64,7 @@ namespace LogEmOff
         public Computer()
         {
             //nothing here
+            TestConnection();
         }
 
 
@@ -108,6 +124,22 @@ namespace LogEmOff
         {
             throw new NotImplementedException();
         }
+
+        public void TestConnection()
+        {
+            //test connectivity to machine and update online flag
+            Online = false;
+            ComputerMAC = "";
+        }
+
+        public bool RedImageExists()
+        {
+            
+            return false;
+        }
+
+
+
         #endregion
 
     }
