@@ -36,6 +36,7 @@ namespace LogEmOffUI.Controllers
             
             foreach(var login in logins)
             {
+                var comp = Network.GetComputerByID(login.LoginID);
                 ViewData.Add(new KeyValuePair<string,object>("comp" + login.LoginID.ToString() , Network.GetComputerByID(login.LoginID).ComputerName));                
             }
 

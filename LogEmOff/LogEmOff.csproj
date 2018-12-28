@@ -22,6 +22,9 @@
     <Compile Update="Migrations\20181221185935_ComputerOnline.Designer.cs">
       <DependentUpon>20181221185935_ComputerOnline.cs</DependentUpon>
     </Compile>
+    <Compile Update="Migrations\20181224163916_images3.Designer.cs">
+      <DependentUpon>20181224163916_images3.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

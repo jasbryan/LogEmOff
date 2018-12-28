@@ -42,6 +42,45 @@
         </dd>
     </dl>
 </div>
+
+
+@if( (bool)ViewData["HasLogins"] )
+{
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>UserLogins</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (IEnumerable<LogEmOff.Login>)ViewData["Logins"])
+                {
+                    <tr>
+                        <td>
+                            @if (item.Enabled)
+                            {
+                                if (item.GreenImage == null)
+                                {
+                                    <img src="~/images/GreenUser.png" alt="Enabled" width="32" height="32">
+                                }
+                            }
+                            else
+                            {
+                                if (item.RedImage == null)
+                                {
+                                    <img src="~/images/RedUser.png" alt="Disabled" width="32" height="32">
+                                }
+                            }
+                            @item.LoginName
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ComputerID">Edit</a> |
     <a asp-action="Index">Back to List</a>

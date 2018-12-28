@@ -27,6 +27,7 @@ namespace LogEmOff
         /// </summary>
         public int UserID { get; set; }
 
+
         public virtual ICollection<Login> Logins { get; set; }
 
         #endregion

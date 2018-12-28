@@ -35,6 +35,17 @@ namespace LogEmOff
 
         public Boolean Enabled { get; set; }
 
+        /// <summary>
+        /// Image to represent an enabled login
+        /// </summary>
+        public byte[] GreenImage { get; set; }
+
+        /// <summary>
+        /// Image to represent a disabled login
+        /// </summary>
+        public byte[] RedImage { get; set; }
+
+
         public int LoginID { get; set; }
 
         #endregion
