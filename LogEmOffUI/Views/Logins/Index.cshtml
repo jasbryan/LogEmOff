@@ -16,7 +16,10 @@
                 @Html.DisplayNameFor(model => model.LoginName)
             </th>
             <th>
-                @ViewData["ComputerTitle"]
+                @Html.DisplayNameFor(model => model.Computer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
             </th>
             <th></th>
         </tr>
@@ -30,6 +33,11 @@
                     if (item.GreenImage == null)
                     {
                         <img src="~/images/GreenUser.png" alt="Enabled" width="32" height="32">
+                        @Html.DisplayFor(modelItem => item.LoginName)
+                    }
+                    else
+                    {
+                        <img src="data:image/jpg;base64, @item.GreenImage" alt="Enabled" width="32" height="32">
                     }
                 }
                 else
@@ -37,14 +45,44 @@
                     if (item.RedImage == null)
                     {
                         <img src="~/images/RedUser.png" alt="Disabled" width="32" height="32">
+                        @Html.DisplayFor(modelItem => item.LoginName)
+                    }
+                    else
+                    {
+                        <img src="data:image/jpg;base64, @item.RedImage" alt="Enabled" width="32" height="32">
                     }
                 }
-                @Html.DisplayFor(modelItem => item.LoginName)
+
             </td>
             <td>
-                @ViewData["comp" + item.LoginID.ToString()]
+                @if (item.Computer.Online)
+                {
+                    if (item.Computer.GreenImage == null)
+                    {
+                        <img src="~/images/GreenComputerIcon.png" alt="Online" width="32" height="32">
+                        @Html.DisplayFor(modelItem => item.Computer.ComputerName)
+                    }
+                    else
+                    {
+                        <img src="data:image/jpg;base64, @item.Computer.GreenImage" alt="Enabled" width="32" height="32">
+                    }
+                }
+                else
+                {
+                    if (item.Computer.RedImage == null)
+                    {
+                        <img src="~/images/RedComputerIcon.png" alt="Offline" width="32" height="32">
+                        @Html.DisplayFor(modelItem => item.Computer.ComputerName)
+                    }
+                    else
+                    {
+                        <img src="data:image/jpg;base64, @item.Computer.RedImage" alt="Enabled" width="32" height="32">
+                    }
+                }
             </td>
-
+            <td>
+                @Html.DisplayFor(modeItem => item.User.LastName),@Html.DisplayFor(modelItem => item.User.FirstName)
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.LoginID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.LoginID">Details</a> |

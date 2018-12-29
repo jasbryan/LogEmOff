@@ -32,13 +32,13 @@ namespace LogEmOffUI.Controllers
                 return NotFound();
             }
 
-            ViewData.Add("ComputerTitle", "ComputerName");
+            //ViewData.Add("ComputerTitle", "ComputerName");
             
-            foreach(var login in logins)
-            {
-                var comp = Network.GetComputerByID(login.LoginID);
-                ViewData.Add(new KeyValuePair<string,object>("comp" + login.LoginID.ToString() , Network.GetComputerByID(login.LoginID).ComputerName));                
-            }
+            //foreach(var login in logins)
+            //{
+            //    var comp = Network.GetComputerByID(login.LoginID);
+            //    ViewData.Add(new KeyValuePair<string,object>("comp" + login.LoginID.ToString() , Network.GetComputerByID(login.LoginID).ComputerName));                
+            //}
 
             return View(logins);
             //return View(await networkModel.ToListAsync());

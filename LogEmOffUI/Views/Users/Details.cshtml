@@ -43,6 +43,11 @@
                                 if (item.GreenImage == null)
                                 {
                                     <img src="~/images/GreenUser.png" alt="Enabled" width="32" height="32">
+                                    @item.LoginName
+                                }
+                                else
+                                {
+                                    <img src="data:image/jpg;base64, @item.RedImage" alt="Enabled" width="32" height="32">
                                 }
                             }
                             else
@@ -50,9 +55,14 @@
                                 if (item.RedImage == null)
                                 {
                                     <img src="~/images/RedUser.png" alt="Disabled" width="32" height="32">
+                                    @item.LoginName
+                                }
+                                else
+                                {
+                                    <img src="data:image/jpg;base64, @item.RedImage" alt="Enabled" width="32" height="32">
                                 }
                             }
-                            @item.LoginName
+
                         </td>
                     </tr>
                 }

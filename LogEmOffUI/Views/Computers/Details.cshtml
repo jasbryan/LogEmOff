@@ -17,12 +17,6 @@
             @Html.DisplayFor(model => model.AdminLogin)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.AdminPassword)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AdminPassword)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.ComputerName)
         </dt>
         <dd>
@@ -64,12 +58,20 @@
                                 {
                                     <img src="~/images/GreenUser.png" alt="Enabled" width="32" height="32">
                                 }
+                                else
+                                {
+                                    <img src="data:image/jpg;base64, @item.GreenImage" alt="Enabled" width="32" height="32">
+                                }
                             }
                             else
                             {
                                 if (item.RedImage == null)
                                 {
                                     <img src="~/images/RedUser.png" alt="Disabled" width="32" height="32">
+                                }
+                                else
+                                {
+                                    <img src="data:image/jpg;base64, @item.RedImage" alt="Enabled" width="32" height="32">
                                 }
                             }
                             @item.LoginName

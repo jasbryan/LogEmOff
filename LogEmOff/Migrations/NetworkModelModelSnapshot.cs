@@ -96,7 +96,7 @@ namespace LogEmOff.Migrations
                         .HasMaxLength(20);
 
                     b.HasKey("UserID")
-                        .HasName("PK_Account");
+                        .HasName("PK_User");
 
                     b.ToTable("Users");
                 });
