@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
@@ -120,6 +121,13 @@ namespace LogEmOff
             //return networkUsers;
             return db.Users;
         }
+
+        public static IEnumerable<Login> GetBigLogins()
+        {
+            var logins = db.Logins.Include(l => l.Computer).Include(l => l.User).ToList();
+            return logins;
+        }
+
 
         /// <summary>
         /// Function retrievs all Logins that have been configured

@@ -25,20 +25,12 @@ namespace LogEmOffUI.Controllers
         public IActionResult Index()
         {
             //var networkModel = _context.Logins.Include(l => l.Computer).Include(l => l.User);
-            var logins = Network.GetLogins();
+            var logins = Network.GetBigLogins();
 
             if (logins.Count() == 0)
             {
                 return NotFound();
             }
-
-            //ViewData.Add("ComputerTitle", "ComputerName");
-            
-            //foreach(var login in logins)
-            //{
-            //    var comp = Network.GetComputerByID(login.LoginID);
-            //    ViewData.Add(new KeyValuePair<string,object>("comp" + login.LoginID.ToString() , Network.GetComputerByID(login.LoginID).ComputerName));                
-            //}
 
             return View(logins);
             //return View(await networkModel.ToListAsync());

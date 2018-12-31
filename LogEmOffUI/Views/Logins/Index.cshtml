@@ -25,70 +25,75 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+    {
         <tr>
             <td>
-                @if (item.Enabled)
-                {
-                    if (item.GreenImage == null)
+                <a asp-action="Details" asp-route-id="@item.LoginID" >
+                    @if (item.Enabled)
                     {
-                        <img src="~/images/GreenUser.png" alt="Enabled" width="32" height="32">
-                        @Html.DisplayFor(modelItem => item.LoginName)
+                        if (item.GreenImage == null)
+                        {
+                            <img src="~/images/GreenUser.png" alt="Enabled" width="32" height="32">
+                            @Html.DisplayFor(modelItem => item.LoginName)
+                        }
+                        else
+                        {
+                            <img src="data:image/jpg;base64, @item.GreenImage" alt="Enabled" width="32" height="32">
+                        }
                     }
                     else
                     {
-                        <img src="data:image/jpg;base64, @item.GreenImage" alt="Enabled" width="32" height="32">
+                        if (item.RedImage == null)
+                        {
+                            <img src="~/images/RedUser.png" alt="Disabled" width="32" height="32">
+                            @Html.DisplayFor(modelItem => item.LoginName)
+                        }
+                        else
+                        {
+                            <img src="data:image/jpg;base64, @item.RedImage" alt="Enabled" width="32" height="32">
+                        }
                     }
-                }
-                else
-                {
-                    if (item.RedImage == null)
-                    {
-                        <img src="~/images/RedUser.png" alt="Disabled" width="32" height="32">
-                        @Html.DisplayFor(modelItem => item.LoginName)
-                    }
-                    else
-                    {
-                        <img src="data:image/jpg;base64, @item.RedImage" alt="Enabled" width="32" height="32">
-                    }
-                }
-
+                </a>
             </td>
             <td>
-                @if (item.Computer.Online)
-                {
-                    if (item.Computer.GreenImage == null)
+                <a asp-controller="Computers" asp-action="Details" asp-route-id="@item.ComputerID">
+                    @if (item.Computer.Online)
                     {
-                        <img src="~/images/GreenComputerIcon.png" alt="Online" width="32" height="32">
-                        @Html.DisplayFor(modelItem => item.Computer.ComputerName)
+                        if (item.Computer.GreenImage == null)
+                        {
+                            <img src="~/images/GreenComputerIcon.png" alt="Online" width="32" height="32">
+                            @Html.DisplayFor(modelItem => item.Computer.ComputerName)
+                        }
+                        else
+                        {
+                            <img src="data:image/jpg;base64, @item.Computer.GreenImage" alt="Enabled" width="32" height="32">
+                        }
                     }
                     else
                     {
-                        <img src="data:image/jpg;base64, @item.Computer.GreenImage" alt="Enabled" width="32" height="32">
+                        if (item.Computer.RedImage == null)
+                        {
+                            <img src="~/images/RedComputerIcon.png" alt="Offline" width="32" height="32">
+                            @Html.DisplayFor(modelItem => item.Computer.ComputerName)
+                        }
+                        else
+                        {
+                            <img src="data:image/jpg;base64, @item.Computer.RedImage" alt="Enabled" width="32" height="32">
+                        }
                     }
-                }
-                else
-                {
-                    if (item.Computer.RedImage == null)
-                    {
-                        <img src="~/images/RedComputerIcon.png" alt="Offline" width="32" height="32">
-                        @Html.DisplayFor(modelItem => item.Computer.ComputerName)
-                    }
-                    else
-                    {
-                        <img src="data:image/jpg;base64, @item.Computer.RedImage" alt="Enabled" width="32" height="32">
-                    }
-                }
+                </a>
             </td>
             <td>
-                @Html.DisplayFor(modeItem => item.User.LastName),@Html.DisplayFor(modelItem => item.User.FirstName)
+                <a asp-controller="Users" asp-action="Details" asp-route-id="@item.UserID">
+                    @Html.DisplayFor(modeItem => item.User.LastName),@Html.DisplayFor(modelItem => item.User.FirstName)
+                </a>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.LoginID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.LoginID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.LoginID">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

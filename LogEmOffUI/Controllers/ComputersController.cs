@@ -40,7 +40,7 @@ namespace LogEmOffUI.Controllers
                 return NotFound();
             }
 
-            if (Network.GetLogins().Any(c => c.ComputerID == id))
+            if (Network.GetLogins().Any(c => c.ComputerID == id.Value))
             {
                 ViewData["HasLogins"] = true;
                 ViewData["Logins"] = Network.GetLogins().Where(c => c.ComputerID == id.Value);
