@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Cloud.InstrumentationFramework;
-
+using System.Threading;
 
 namespace LogEmOffUI
 {
@@ -17,8 +17,22 @@ namespace LogEmOffUI
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
-            EmitMetrics();
+
+            MdmSample();
+            HealthSample();
+                       
+            CreateWebHostBuilder(args)
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    logging.AddConsole();
+                    logging.AddDebug();
+                    logging.AddEventSourceLogger();
+                })
+                .Build()
+                .Run();
+            //EmitMetrics();
+
 
             // IFx initialization is a required step for emitting logs
             IfxInitializer.Initialize(
@@ -26,33 +40,105 @@ namespace LogEmOffUI
                 "cloudAgentRoleIdentity",
                 "cloudAgentRoleInstanceIdentity");
 
-            EmitLogs();
         }
 
-        static void EmitMetrics()
+        static void MdmSample()
         {
             ErrorContext mdmError = new ErrorContext();
 
+            // MeasureMetric usage sample
             MeasureMetric1D testMeasure = MeasureMetric1D.Create(
-                "MyMonitoringAccount",
-                "MyMetricNamespace",
-                "MyMetricName",
-                "MyDimensionName",
-                ref mdmError);
+                    "Fabricator",                                        // MonitoringAccount
+                    "Microsoft/Azure/Fabric/Tenant Manager/Management",  // MetricNamespace
+                    "HI node count",                                     // MetricName
+                    "Cluster",                                           // dimension 1
+                    ref mdmError);
 
             if (testMeasure == null)
             {
-                Console.WriteLine("Fail to create MeasureMetric, error code is {0:X}, error message is {1}",
-                    mdmError.ErrorCode,
-                    mdmError.ErrorMessage);
+                Console.WriteLine("Fail to create MeasureMetric, error code is {0:X}", mdmError.ErrorCode);
+                Console.WriteLine("    error message: {0}", mdmError.ErrorMessage);
             }
-            else if (!testMeasure.LogValue(101, "MyDimensionValue", ref mdmError))
+
+            if (!testMeasure.LogValue(29, "Ch3PrdDDC03", ref mdmError))
             {
-                Console.WriteLine("Fail to log MeasureMetric value, error code is {0:X}, error message is {1}",
-                    mdmError.ErrorCode,
-                    mdmError.ErrorMessage);
+                Console.WriteLine("Fail to set MeasureMetric value, error code is {0:X}", mdmError.ErrorCode);
+                Console.WriteLine("    error message: {0}", mdmError.ErrorMessage);
+            }
+
+            if (!testMeasure.LogValue(DateTime.UtcNow, 1, "HK2PrdApp03", ref mdmError))
+            {
+                Console.WriteLine("Fail to set MeasureMetric value, error code is {0:X}", mdmError.ErrorCode);
+                Console.WriteLine("    error message: {0}", mdmError.ErrorMessage);
+            }
+
+            Thread.Sleep(1000);
+
+            if (!testMeasure.LogValue(DateTime.UtcNow, 3, "HK2PrdApp03", ref mdmError))
+            {
+                Console.WriteLine("Fail to set MeasureMetric value, error code is {0:X}", mdmError.ErrorCode);
+                Console.WriteLine("    error message: {0}", mdmError.ErrorMessage);
             }
         }
+
+        static void HealthSample()
+        {
+            MetadataCollection resourceIdentityDimensions = new MetadataCollection();
+            MetadataCollection resourceMetadataCollection = new MetadataCollection();
+            MetadataCollection watchdogMetadataCollection = new MetadataCollection();
+
+            resourceIdentityDimensions.Add("Name", "ABC");
+
+            bool result = IfxHealth.LogWatchdogHealthReport(
+                "MonitoringAccount",
+                "WatchdogName",
+                "ResourceType",
+                resourceIdentityDimensions,
+                ResourceHealthStatus.Error,
+                true,
+                DateTime.UtcNow,
+                "Message",
+                "ArmResourceId",
+                "IncarnationId",
+                resourceMetadataCollection,
+                watchdogMetadataCollection
+                );
+
+            if (result)
+            {
+                Console.WriteLine("Successfully called IfxHealth.LogWatchdogHealthReport.");
+            }
+            else
+            {
+                Console.WriteLine("IfxHealth.LogWatchdogHealthReport call failed.");
+            }
+
+            MetadataCollection annotationMetadataCollection = new MetadataCollection();
+
+            result = IfxHealth.LogAnnotationHealthReport(
+                "MonitoringAccount",
+                "Content",
+                "WatchdogName",
+                "ResourceType",
+                resourceIdentityDimensions,
+                true,
+                DateTime.UtcNow,
+                "DisplayName",
+                "ArmResourceId",
+                annotationMetadataCollection
+                );
+
+            if (result)
+            {
+                Console.WriteLine("Successfully called IfxHealth.LogAnnotationHealthReport.");
+            }
+            else
+            {
+                Console.WriteLine("IfxHealth.LogAnnotationHealthReport call failed.");
+            }
+        }
+
+
 
         static void EmitLogs()
         {

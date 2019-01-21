@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Cloud.InstrumentationFramework;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -244,13 +245,36 @@ namespace LogEmOff
         {
             return db.Users.Any(e => e.UserID == id);
         }
-
-
-
+               
         public static string EncryptPassword(string password)
         {
             //run code to encrypt password
             return $"ENCRYPTED__{password}";
+        }
+
+        public static void EmitMetric(string metricName)
+        {
+            ErrorContext mdmError = new ErrorContext();
+
+            MeasureMetric1D testMeasure = MeasureMetric1D.Create(
+                "MyMonitoringAccount",
+                "MyMetricNamespace",
+                metricName,
+                "MyDimensionName",
+                ref mdmError);
+
+            if (testMeasure == null)
+            {
+                Console.WriteLine("Fail to create MeasureMetric, error code is {0:X}, error message is {1}",
+                    mdmError.ErrorCode,
+                    mdmError.ErrorMessage);
+            }
+            else if (!testMeasure.LogValue(101, "MyDimensionValue", ref mdmError))
+            {
+                Console.WriteLine("Fail to log MeasureMetric value, error code is {0:X}, error message is {1}",
+                    mdmError.ErrorCode,
+                    mdmError.ErrorMessage);
+            }
         }
 
 

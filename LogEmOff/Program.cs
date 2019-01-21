@@ -127,5 +127,6 @@ namespace LogEmOff
                 Console.WriteLine($"UserID: {tempUser.UserID}, UserName: {tempUser.FirstName} {tempUser.LastName}");
             }
         }
+
     }
 }

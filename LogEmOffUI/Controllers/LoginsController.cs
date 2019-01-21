@@ -31,7 +31,8 @@ namespace LogEmOffUI.Controllers
             {
                 return NotFound();
             }
-
+                       
+            Network.EmitMetric("LoginIndex");
             return View(logins);
             //return View(await networkModel.ToListAsync());
         }
@@ -52,6 +53,7 @@ namespace LogEmOffUI.Controllers
                 return NotFound();
             }
 
+            Network.EmitMetric("LoginDetails");
             return View(login);
         }
 
@@ -60,6 +62,7 @@ namespace LogEmOffUI.Controllers
         {
             ViewData["ComputerID"] = new SelectList(Network.GetComputers(), "ComputerID", "ComputerName");
             ViewData["UserID"] = new SelectList(Network.GetUsers(), "UserID", "FirstName");
+            Network.EmitMetric("LoginCreate");
             return View();
         }
 
@@ -99,6 +102,7 @@ namespace LogEmOffUI.Controllers
             }
             ViewData["ComputerID"] = new SelectList(Network.GetComputers(), "ComputerID", "ComputerName", login.ComputerID);
             ViewData["UserID"] = new SelectList(Network.GetUsers(), "UserID", "FirstName", login.UserID);
+            Network.EmitMetric("LoginEdit");
             return View(login);
         }
 
@@ -155,6 +159,7 @@ namespace LogEmOffUI.Controllers
                 return NotFound();
             }
 
+            Network.EmitMetric("LoginDelete");
             return View(login);
         }
 
