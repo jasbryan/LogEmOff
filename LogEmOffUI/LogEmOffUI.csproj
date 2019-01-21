@@ -6,11 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GenevaMonitoringAgent" Version="42.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.Cloud.InstrumentationFramework.Metrics.NetStd" Version="1.2.1007130001" />
-    <PackageReference Include="Microsoft.Cloud.InstrumentationFramework.NetStd" Version="1.2.1007130001" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" PrivateAssets="All" />
   </ItemGroup>
 

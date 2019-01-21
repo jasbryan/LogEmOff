@@ -6,8 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GenevaMonitoringAgent" Version="42.1.2" />
-    <PackageReference Include="Microsoft.Cloud.InstrumentationFramework.Metrics.NetStd" Version="1.2.1007130001" />
+    <PackageReference Include="Microsoft.Cloud.InstrumentationFramework.DevEx" Version="3.0.9.2" />
+    <PackageReference Include="Microsoft.Cloud.InstrumentationFramework.DevEx.NetStd" Version="1.2.1007130001" />
+    <PackageReference Include="Microsoft.Cloud.InstrumentationFramework.DevEx.VC14" Version="3.1.6.90" />
     <PackageReference Include="Microsoft.Cloud.InstrumentationFramework.NetStd" Version="1.2.1007130001" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
